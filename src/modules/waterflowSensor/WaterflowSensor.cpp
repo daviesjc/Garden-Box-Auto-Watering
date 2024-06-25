@@ -13,7 +13,7 @@ int WaterflowSensor::callbackId = 0;
 WaterflowSensor::WaterflowSensor() {
 	WATERFLOW_FREQUENCY_PIN = ConfigParser::getIntegerValue(WATERFLOW_FREQUENCY_PIN_KEY);
 	PI_ID = ConfigParser::getIntegerValue(PI_ID_KEY);
-	gpioSetMode(WATERFLOW_FREQUENCY_PIN, PI_INPUT);	
+	std::gpioSetMode(WATERFLOW_FREQUENCY_PIN, PI_INPUT);	
 }
 
 void WaterflowSensor::resetSensorCounts() {
@@ -22,12 +22,12 @@ void WaterflowSensor::resetSensorCounts() {
 }
 
 void WaterflowSensor::stopRecording() {
-	callback_cancel(callbackId);
+	std::callback_cancel(callbackId);
 }
 
 void WaterflowSensor::resetAndRecord() {
 	resetSensorCounts();
-	callbackId = callback(PI_ID, WATERFLOW_FREQUENCY_PIN, RISING_EDGE, tickDetected);
+	callbackId = std::callback(PI_ID, WATERFLOW_FREQUENCY_PIN, RISING_EDGE, tickDetected);
 }
 
 void WaterflowSensor::calculateRollingAverage() {
