@@ -23,25 +23,25 @@ public:
 	double getLitersPerSecond() { return ticksPerSecond / ticksPerLiter; }
 	
 protected:
-	static int WATERFLOW_FREQUENCY_PIN;
-	static int PI_ID;
+	int WATERFLOW_FREQUENCY_PIN = -1;
+	int PI_ID = -1;
 	
 	// Variables for runtime frequency ticks
-	static int tickCount;
-	static double ticksPerSecond;
+	int tickCount = 0;
+	double ticksPerSecond = 0;
 	
 	// Last tick time
-	static std::chrono::steady_clock::time_point lastTick;
+	std::chrono::steady_clock::time_point lastTick = std::chrono::steady_clock::now();
 	
 	// The amount of ticks for every liter of water
 	double ticksPerLiter = 0;
 		
 	// Callback ID for waiting and reading tick counts
-	static int callbackId;
+	int callbackId = -1;
 private:
 	// Calculates ticks per second
-	static void calculateRollingAverage();
-	static void tickDetected(int pi, unsigned user_gpio, unsigned level, uint32_t tick);
+	void calculateRollingAverage();
+	void tickDetected(int pi, unsigned user_gpio, unsigned level, uint32_t tick);
 	
 	const std::string WATERFLOW_FREQUENCY_PIN_KEY = "WATERFLOW_FREQUENCY_PIN";
 	const std::string PI_ID_KEY = "PI_ID";
