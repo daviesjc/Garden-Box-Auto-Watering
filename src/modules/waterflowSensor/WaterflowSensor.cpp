@@ -1,5 +1,8 @@
 #include "../../../include/modules/waterflowSensor/WaterflowSensor.h"
 
+#include <pigpio.h>
+#include <pigpiod_if2.h>
+
 WaterflowSensor::WaterflowSensor() {
 	WATERFLOW_FREQUENCY_PIN = ConfigParser::getIntegerValue(WATERFLOW_FREQUENCY_PIN_KEY);
 	PI_ID = ConfigParser::getIntegerValue(PI_ID_KEY);
