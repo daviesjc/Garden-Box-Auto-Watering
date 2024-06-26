@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <pigpio.h>
+#include <pigpiod_if2.h>
 #include "../include/modules/waterSolenoid/WalfrontSolenoid.h"
 #include "../include/helpers/ConfigParser.h"
 #include "../include/helpers/ArgumentParser.h"

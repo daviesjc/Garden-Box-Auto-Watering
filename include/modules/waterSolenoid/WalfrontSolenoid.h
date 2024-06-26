@@ -4,7 +4,7 @@
 
 class WalfrontSolenoid : public WaterSolenoid {
 public:
-	WalfrontSolenoid() : WaterSolenoid();
+	WalfrontSolenoid();
 	
 	void open();
 	void close();

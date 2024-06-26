@@ -2,7 +2,7 @@
 
 #include <pigpio.h>
 
-WalfrontSolenoid::WalfrontSolenoid() {
+WalfrontSolenoid::WalfrontSolenoid() : WaterSolenoid() {
 	gpioSetMode(getOpenPin(), PI_OUTPUT);
     gpioSetMode(getClosePin(), PI_OUTPUT);
 }
