@@ -49,6 +49,8 @@ int main(int argc, char* argv[]) {
 	std::cout << "Opening" << std::endl;
 	solenoid->open();
 	
+	time_sleep(5);
+	
 	// Test code for right now
 	std::cout << "Closing" << std::endl;
 	solenoid->close();
