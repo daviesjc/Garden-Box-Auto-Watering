@@ -9,40 +9,45 @@ class WaterflowSensor {
 public:
 	WaterflowSensor();
 	
-	int getWaterflowPin() { return WATERFLOW_FREQUENCY_PIN; }
-	
-	void resetSensorCounts();
-	
+	// Methods for tracking water usage during session
 	void stopRecording();
 	void resetAndRecord();
 	
-	int getTicks() { return tickCount; }
-	double getTicksPerSecond() { return ticksPerSecond; }
-	
+	// Calculate liters of water
 	double getLitersOfWater() { return tickCount / ticksPerLiter; }
 	double getLitersPerSecond() { return ticksPerSecond / ticksPerLiter; }
+		
+	// Getters & Setters 
+	int getCallbackId() { return callbackId; }
+	int getTickCount() { return tickCount; }
+	double getTicksPerSecond() { return ticksPerSecond; }
 	
-protected:
+	double getTicksPerLiter() { return ticksPerLiter; }
+	void setTicksPerLiter(int ticks) { ticksPerLiter = ticks; }
+	
+private:
+	// Reset between sessions
+	void resetSensorCounts();
+
+	// Calculates ticks per second
+	static void calculateRollingAverage();
+	static void tickDetected(int pi, unsigned user_gpio, unsigned level, uint32_t tick);
+	
+	// Variables for callback function
+	static int callbackId;
+	static int tickCount;
+	static double ticksPerSecond;
+	static std::chrono::steady_clock::time_point lastTick;
+	
+	// The amount of ticks that the waterflow sensor does per liter.
+	// For conversion.
+	double ticksPerLiter = 0;
+	
+	// ConfigParser properties.
 	int WATERFLOW_FREQUENCY_PIN = -1;
 	int PI_ID = -1;
 	
-	// Variables for runtime frequency ticks
-	int tickCount = 0;
-	double ticksPerSecond = 0;
-	
-	// Last tick time
-	std::chrono::steady_clock::time_point lastTick = std::chrono::steady_clock::now();
-	
-	// The amount of ticks for every liter of water
-	double ticksPerLiter = 0;
-		
-	// Callback ID for waiting and reading tick counts
-	int callbackId = -1;
-private:
-	// Calculates ticks per second
-	void calculateRollingAverage();
-	void tickDetected(int pi, unsigned user_gpio, unsigned level, uint32_t tick);
-	
+	// ConfigParser keys.
 	const std::string WATERFLOW_FREQUENCY_PIN_KEY = "WATERFLOW_FREQUENCY_PIN";
 	const std::string PI_ID_KEY = "PI_ID";
 };

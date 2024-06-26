@@ -3,22 +3,16 @@
 #include <pigpio.h>
 #include <pigpiod_if2.h>
 
-int WaterflowSensor::WATERFLOW_FREQUENCY_PIN = -1;
-int WaterflowSensor::PI_ID = -1;
+// Initialize static variables
+int WaterflowSensor::callbackId = 0;
 int WaterflowSensor::tickCount = 0;
 double WaterflowSensor::ticksPerSecond = 0;
 std::chrono::steady_clock::time_point WaterflowSensor::lastTick = std::chrono::steady_clock::now();
-int WaterflowSensor::callbackId = 0;
 
 WaterflowSensor::WaterflowSensor() {
 	WATERFLOW_FREQUENCY_PIN = ConfigParser::getIntegerValue(WATERFLOW_FREQUENCY_PIN_KEY);
 	PI_ID = ConfigParser::getIntegerValue(PI_ID_KEY);
 	gpioSetMode(WATERFLOW_FREQUENCY_PIN, PI_INPUT);	
-}
-
-void WaterflowSensor::resetSensorCounts() {
-	tickCount = 0;
-	ticksPerSecond = 0;
 }
 
 void WaterflowSensor::stopRecording() {
@@ -28,6 +22,11 @@ void WaterflowSensor::stopRecording() {
 void WaterflowSensor::resetAndRecord() {
 	resetSensorCounts();
 	callbackId = callback(PI_ID, WATERFLOW_FREQUENCY_PIN, RISING_EDGE, tickDetected);
+}
+
+void WaterflowSensor::resetSensorCounts() {
+	tickCount = 0;
+	ticksPerSecond = 0;
 }
 
 void WaterflowSensor::calculateRollingAverage() {
