@@ -11,6 +11,8 @@ build: clean
 	src/modules/waterSolenoid/WalfrontSolenoid.cpp \
 	src/modules/waterflowSensor/WaterflowSensor.cpp \
 	src/modules/waterflowSensor/DigitenFL408.cpp \
+	-lpigpio \
+	-lpigpiod_if2 \
 	-o $(OUTFILE)
 
 clean:
