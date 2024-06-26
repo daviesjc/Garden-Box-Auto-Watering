@@ -3,10 +3,7 @@
 #pragma once
 class WaterSolenoid {
 public:
-    WaterSolenoid() {
-		WATER_SOLENOID_OPEN_PIN = ConfigParser::getIntegerValue(WATER_SOLENOID_OPEN_PIN_KEY);
-		WATER_SOLENOID_CLOSE_PIN = ConfigParser::getIntegerValue(WATER_SOLENOID_CLOSE_PIN_KEY);
-	}
+    WaterSolenoid();
 
     virtual void open();
     virtual void close();
