@@ -14,7 +14,7 @@ void WalfrontSolenoid::open() {
 }
 
 void WalfrontSolenoid::close() {
-	gpioWrite(getOpenPin(), PI_LOW);
+	gpioWrite(getClosePin(), PI_HIGH);
 	time_sleep(1);
-	gpioWrite(getOpenPin(), PI_HIGH);
+	gpioWrite(getClosePin(), PI_LOW);
 }
