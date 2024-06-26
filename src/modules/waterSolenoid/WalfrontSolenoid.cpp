@@ -1,8 +1,10 @@
 #include "../../../include/modules/waterSolenoid/WalfrontSolenoid.h"
 
 #include <pigpio.h>
+#include <iostream>
 
 WalfrontSolenoid::WalfrontSolenoid() : WaterSolenoid() {
+	std::cout << getOpenPin() << std::endl;
 	gpioSetMode(getOpenPin(), PI_OUTPUT);
     gpioSetMode(getClosePin(), PI_OUTPUT);
 	gpioSetMode(getEnablePin(), PI_OUTPUT);
